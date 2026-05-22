@@ -1,0 +1,27 @@
+# TurtleQL configuration
+# Copy to config.local.yaml and fill in your values.
+
+web_port: 8084
+
+# MCP knowledge server — point at a running turtleatlas-mcp instance
+mcp_server_url: http://localhost:3000/mcp
+# mcp_local_path: /path/to/local/turtleatlas-mcp  # use local instance instead
+
+# Database adapter: sqlite | postgres
+db_adapter: sqlite
+
+# LLM provider selection (first match wins):
+#   AZURE_OPENAI_ENDPOINT set   → Azure OpenAI
+#   CLAUDE_CODE_USE_BEDROCK=1   → AWS Bedrock
+#   ANTHROPIC_API_KEY set       → Anthropic direct (default)
+
+# Azure OpenAI (optional)
+# azure_openai_endpoint: https://your-resource.openai.azure.com
+# azure_openai_api_key: your-key
+# azure_openai_large_deployment: gpt-4o
+# azure_openai_small_deployment: gpt-4o-mini
+# azure_openai_api_version: 2024-12-01-preview
+
+# Model overrides (optional — defaults use latest Claude models)
+# large_model: claude-sonnet-4-6
+# small_model: claude-haiku-4-5-20251001

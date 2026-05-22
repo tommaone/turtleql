@@ -1,0 +1,12 @@
+fastapi>=0.110
+uvicorn>=0.29
+pyyaml>=6.0
+requests>=2.31
+openai>=1.30
+
+# Optional: AWS Bedrock provider
+# boto3>=1.34
+
+# Optional: PostgreSQL adapter
+# psycopg2-binary>=2.9
+

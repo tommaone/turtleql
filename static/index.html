@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurtleQL</title>
+    <link rel="icon" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <span class="logo">TurtleQL</span>
+    <span id="conn-status" class="conn-status">Not connected</span>
+    <div class="spacer"></div>
+    <span id="loading-indicator" class="loading" style="display:none"></span>
+    <span id="progress-text" style="font-size:12px;color:var(--text-dim)"></span>
+    <button id="btn-cancel" style="display:none;border-color:var(--red);color:var(--red)">Cancel</button>
+    <button id="btn-toggle-schema" title="Toggle schema search">Schema</button>
+    <button id="btn-toggle-panel" title="Toggle side panel">Panel</button>
+    <button id="btn-connect">Connect</button>
+</div>
+
+<!-- Layout: chat-first, editor/results as side panel -->
+<div class="layout">
+
+    <!-- Left: Chat (primary area) -->
+    <div class="chat-panel">
+        <!-- Collapsible schema drawer -->
+        <div id="schema-drawer" class="schema-drawer hidden">
+            <div class="schema-search">
+                <input id="schema-q" type="text" placeholder="Search tables...">
+                <button id="btn-schema-search">Go</button>
+            </div>
+            <div id="schema-results" class="schema-results"></div>
+        </div>
+
+        <!-- Chat history -->
+        <div id="chat-history" class="chat-history">
+            <div class="empty-state" style="padding:24px">
+                <p>Ask a question in natural language<br>or toggle the editor to write SQL directly</p>
+            </div>
+        </div>
+
+        <!-- Chat input -->
+        <div class="chat-input">
+            <textarea id="chat-input" rows="1" placeholder="Ask Claude..."></textarea>
+            <button id="btn-ask">Ask</button>
+        </div>
+    </div>
+
+    <!-- Resize handle: chat <-> right panel -->
+    <div id="resize-h" class="resize-handle-h"></div>
+
+    <!-- Right: Editor + Results (tabbed, collapsible) -->
+    <div class="right-panel" id="right-panel">
+        <!-- Tab bar -->
+        <div class="panel-tabs">
+            <button class="panel-tab active" data-tab="editor" id="tab-editor">SQL Editor</button>
+            <button class="panel-tab" data-tab="results" id="tab-results">Results</button>
+            <button class="panel-tab" data-tab="schema" id="tab-schema">Schema</button>
+        </div>
+
+        <!-- Editor tab content -->
+        <div class="tab-content active" id="tab-content-editor">
+            <div class="editor-toolbar">
+                <div class="spacer"></div>
+                <button id="btn-run">Run SQL</button>
+            </div>
+            <div id="monaco-container"></div>
+        </div>
+
+        <!-- Schema detail tab content -->
+        <div class="tab-content" id="tab-content-schema">
+            <div id="schema-detail" class="schema-detail">
+                <div class="empty-state">
+                    <div class="icon">&#x1F50D;</div>
+                    <p>Search for a table using the Schema button<br>and click a result to see its details</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results tab content -->
+        <div class="tab-content" id="tab-content-results">
+            <div class="results-toolbar">
+                <span>Results</span>
+                <span id="results-info" class="info"></span>
+            </div>
+            <div id="results-scroll" class="results-scroll">
+                <div class="empty-state">
+                    <div class="icon">&#x1F422;</div>
+                    <p>Run a query to see results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Connect dialog -->
+<div id="connect-dialog" class="dialog-overlay hidden">
+    <div class="dialog">
+        <h2>Connect to DB2</h2>
+        <label>Profile</label>
+        <div id="profile-list" class="profile-list"></div>
+        <label>Username</label>
+        <input id="conn-user" type="text" autocomplete="username">
+        <label>Password</label>
+        <input id="conn-pass" type="password" autocomplete="current-password">
+        <div id="connect-error" class="error-msg"></div>
+        <div class="actions">
+            <button id="btn-connect-cancel" class="cancel">Cancel</button>
+            <button id="btn-connect-confirm" class="confirm">Connect</button>
+        </div>
+    </div>
+</div>
+
+<!-- Destructive operation dialog -->
+<div id="destructive-dialog" class="dialog-overlay hidden">
+    <div class="dialog destructive">
+        <h2>Confirm Destructive Operation</h2>
+        <p id="destructive-info" style="font-family:var(--mono);font-size:12px;background:var(--bg);padding:8px;border-radius:4px;margin:8px 0;word-break:break-all"></p>
+        <label>Re-enter password to confirm</label>
+        <input id="destructive-pass" type="password">
+        <div id="destructive-error" class="error-msg"></div>
+        <div class="actions">
+            <button id="btn-destructive-cancel" class="cancel">Cancel</button>
+            <button id="btn-destructive-confirm" class="confirm">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Markdown renderer (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<!-- Monaco Editor loader (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

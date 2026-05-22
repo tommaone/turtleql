@@ -1,0 +1,67 @@
+# TurtleQL .gitignore
+
+# Environment files with API keys
+.env
+.env.local
+*.key
+
+# Local machine config (paths, MCP settings) - never commit
+config.local.yaml
+
+# Conversation history (contains queries and generated SQL)
+data/conversation.json
+data/.turtleql_history
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Don't commit actual SQuirreL configs (may contain passwords)
+.squirrel-sql/
+SQLDrivers.xml
+SQLAliases23.xml
+
+# Internal/DB2-specific files — not part of the OSS distribution
+db2cli.py
+turtleql.py
+turtleql.ps1
+turtleql-web.ps1
+db2jcc4.jar
+schema_loader.py
+schemas/
+prompts/
+docs/
+
+# Local database files
+*.db
+*.sqlite
+
+# Output files
+*.csv
+*.xlsx
+output/
+exports/

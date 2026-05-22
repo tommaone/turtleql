@@ -1,0 +1,47 @@
+tools:
+  - name: get_sql_rules
+    description: "Returns SQL generation rules for this database. Always call this first."
+    parameters:
+      type: object
+      properties: {}
+      required: []
+
+  - name: list_experts
+    description: "List available domain expert knowledge files with descriptions."
+    parameters:
+      type: object
+      properties: {}
+      required: []
+
+  - name: get_expert
+    description: "Load a specific expert knowledge file by name."
+    parameters:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "Expert file name as returned by list_experts (e.g. 'orders.md')"
+      required: [name]
+
+  - name: search_tables
+    description: "Search for relevant database tables by keywords."
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          description: "Search keywords"
+        limit:
+          type: integer
+          description: "Max results (default 15)"
+      required: [query]
+
+  - name: get_table_details
+    description: "Get full schema for a specific table."
+    parameters:
+      type: object
+      properties:
+        table_name:
+          type: string
+          description: "Exact table name"
+      required: [table_name]
